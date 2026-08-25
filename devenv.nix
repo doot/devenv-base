@@ -1,16 +1,19 @@
-{ pkgs, lib, config, ... }:
-
-# TODO: Is there any advantage to having the `options.shared` blocks below for `rust`, `nix`, `shell`, etc, vs 
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+# TODO: Is there any advantage to having the `options.shared` blocks below for `rust`, `nix`, `shell`, etc, vs
 # just putting them directly in the `profiles.base.module` block? It seems like it just makes things harder to read with disjointed blocks and if statements
 # instead of just keeping everything related to "rust" in the rust profile.
-
 {
   options.shared = {
-    languages.rust.enable = lib.mkEnableOption "Rust default options";
-
-    languages.nix.enable = lib.mkEnableOption "Nix default options";
-
-    languages.shell.enable = lib.mkEnableOption "Shell default options";
+    languages = {
+      rust.enable = lib.mkEnableOption "Rust default options";
+      nix.enable = lib.mkEnableOption "Nix default options";
+      shell.enable = lib.mkEnableOption "Shell default options";
+    };
   };
 
   config = {
@@ -19,34 +22,40 @@
     packages = lib.mkIf config.shared.languages.rust.enable [
       pkgs.bacon
       pkgs.lldb
-      pkgs.loco  # TODO: Make this dependent on something else, or move directly into oic
+      pkgs.loco # TODO: Make this dependent on something else, or move directly into oic
     ];
 
-    languages.nix = lib.mkIf config.shared.languages.nix.enable {
-      # enable = !config.containers.isBuilding;
-      enable = true;
-      lsp.enable = true;
-    };
+    languages = {
+      nix = lib.mkIf config.shared.languages.nix.enable {
+        # enable = !config.containers.isBuilding;
+        enable = true;
+        lsp.enable = true;
+      };
 
-    languages.shell = lib.mkIf config.shared.languages.shell.enable {
-      enable = true;
-      lsp.enable = true;
-    };
+      shell = lib.mkIf config.shared.languages.shell.enable {
+        enable = true;
+        lsp.enable = true;
+      };
 
-    languages.rust = lib.mkIf config.shared.languages.rust.enable {
-      enable = true;
-      toolchainFile = ./rust-toolchain.toml;
-      lsp.enable = true;
-      mold.enable = true;
-      rustflags = "-Z threads=8";
+      rust = lib.mkIf config.shared.languages.rust.enable {
+        enable = true;
+        toolchainFile = ./rust-toolchain.toml;
+        lsp.enable = true;
+        mold.enable = true;
+        rustflags = "-Z threads=8";
+      };
     };
 
     profiles = {
       base.module = {
-        shared.languages.nix.enable = true;
-        shared.languages.shell.enable = true;
+        shared = {
+          languages = {
+            nix.enable = true;
+            shell.enable = true;
+          };
+        };
 
-        cachix.pull = ["pre-commit-hooks"];
+        cachix.pull = ["devenv" "pre-commit-hooks"];
 
         devcontainer.enable = true;
 
@@ -90,7 +99,7 @@
       };
 
       rust = {
-        extends = [ "base" ];
+        extends = ["base"];
         module = {
           shared.languages.rust.enable = true;
 

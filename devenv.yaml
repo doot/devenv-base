@@ -1,10 +1,18 @@
 # yaml-language-server: $schema=https://devenv.sh/devenv.schema.json
 inputs:
+  # TODO: Temporarily pin to a local dummy flake until devenv supports importing remote devenv.yaml.
+  # This (hopefully) allows other devenvs to import this as a flake and share the same pinned inputs
+  # while keeping devenv.lock and flake.lock in sync in this repo.
+  self-flake:
+    url: path:.
+  nixpkgs:
+    url: github:cachix/devenv-nixpkgs/rolling
+    inputs:
+      nixpkgs::
+        follows: self-flake
   git-hooks:
     url: github:cachix/git-hooks.nix
     inputs:
       nixpkgs:
         follows: nixpkgs
-  nixpkgs:
-    url: github:cachix/devenv-nixpkgs/rolling
 profile: base
