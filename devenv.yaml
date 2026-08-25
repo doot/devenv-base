@@ -7,3 +7,4 @@ inputs:
         follows: nixpkgs
   nixpkgs:
     url: github:cachix/devenv-nixpkgs/rolling
+profile: base
