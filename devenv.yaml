@@ -6,13 +6,7 @@ inputs:
   self-flake:
     url: path:.
   nixpkgs:
-    url: github:cachix/devenv-nixpkgs/rolling
-    inputs:
-      nixpkgs:
-        follows: self-flake
+    follows: self-flake/nixpkgs
   git-hooks:
-    url: github:cachix/git-hooks.nix
-    inputs:
-      nixpkgs:
-        follows: nixpkgs
+    follows: self-flake/git-hooks
 profile: base
