@@ -8,7 +8,7 @@ inputs:
   nixpkgs:
     url: github:cachix/devenv-nixpkgs/rolling
     inputs:
-      nixpkgs::
+      nixpkgs:
         follows: self-flake
   git-hooks:
     url: github:cachix/git-hooks.nix
