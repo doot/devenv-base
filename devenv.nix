@@ -181,6 +181,7 @@
               check-python.enable = !config.container.isBuilding;
               ruff.enable = !config.container.isBuilding;
               ruff-format.enable = !config.container.isBuilding;
+              mypy.enable = !config.container.isBuilding;
             };
           };
         };
