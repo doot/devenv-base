@@ -78,6 +78,7 @@
 
         packages = [
           pkgs.github-cli
+          pkgs.hunspellDicts.en_US
           # pkgs.statix # TODO: Is this needed? Should be included by git-hooks?
           # pkgs.deadnix # TODO: Is this needed? Should be included by git-hooks?
           pkgs.nil # TODO: Is this needed? Should be included by git-hooks?
