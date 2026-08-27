@@ -140,6 +140,7 @@
             echo "Rust version: $(rustc --version)"
             echo "Cargo version: $(cargo --version)"
             echo "RUST_SRC_PATH: $RUST_SRC_PATH"
+            echo "Loaded rust profile."
           '';
 
           git-hooks = {
@@ -172,6 +173,7 @@
 
             echo "Python version: $(python --version)"
             echo "Venv directory: $VIRTUAL_ENV"
+            echo "Loaded python profile."
           '';
 
           git-hooks = {
