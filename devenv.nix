@@ -13,10 +13,13 @@
       rust.enable = lib.mkEnableOption "Rust default options";
       nix.enable = lib.mkEnableOption "Nix default options";
       shell.enable = lib.mkEnableOption "Shell default options";
+      python.enable = lib.mkEnableOption "Python default options";
     };
   };
 
   config = {
+    name = "Devenv Base Config";
+
     # packages = lib.mkIf config.shared.languages.rust.enable lib.optionals (!config.container.isBuilding && !config.devenv.isTesting) [
     # Development packages to include only when not building a container or testing
     packages = lib.mkIf config.shared.languages.rust.enable [
@@ -43,6 +46,18 @@
         lsp.enable = true;
         mold.enable = true;
         rustflags = "-Z threads=8";
+      };
+
+      python = lib.mkIf config.shared.languages.python.enable {
+        enable = true;
+        lsp.enable = true;
+        venv = {
+          enable = true;
+        };
+        uv = {
+          enable = true;
+          sync.enable = true;
+        };
       };
     };
 
@@ -93,7 +108,15 @@
               enable = !config.container.isBuilding;
               args = ["--no-sort-keys"];
             };
-            check-yaml.enable = !config.container.isBuilding;
+            # check-yaml.enable = !config.container.isBuilding; # TODO: Maybe drop, all it does is load the yaml, which the other two should cover..
+            yamllint = {
+              enable = !config.container.isBuilding;
+              settings.configData = "{extends: relaxed, rules: {line-length: {max: 180}}}";
+            };
+            yamlfmt.enable = !config.container.isBuilding;
+            shellcheck.enable = !config.container.isBuilding;
+            actionlint.enable = !config.container.isBuilding;
+            check-toml.enable = !config.container.isBuilding;
           };
         };
       };
@@ -130,7 +153,31 @@
                 enable = !config.container.isBuilding;
                 settings.config-path = ".rustfmt.toml";
               };
-              check-toml.enable = !config.container.isBuilding;
+            };
+          };
+        };
+      };
+
+      python = {
+        extends = ["base"];
+        module = {
+          shared.languages.python.enable = true;
+
+          enterShell = ''
+            # Create a symlink to the Python virtual environment for IDE compatibility
+            if [ ! -L "$DEVENV_ROOT/venv" ]; then
+                ln -s "$DEVENV_STATE/venv/" "$DEVENV_ROOT/venv"
+            fi
+
+            echo "Python version: $(python --version)"
+            echo "Venv directory: $VIRTUAL_ENV"
+          '';
+
+          git-hooks = {
+            hooks = {
+              check-python.enable = !config.container.isBuilding;
+              ruff.enable = !config.container.isBuilding;
+              ruff-format.enable = !config.container.isBuilding;
             };
           };
         };
