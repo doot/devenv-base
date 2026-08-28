@@ -63,6 +63,8 @@
 
     profiles = {
       base.module = {
+        stdenv = pkgs.stdenvNoCC; # Try dropping the C compiler toolchain from the devenv shell (remove if this causes problems).
+
         shared = {
           languages = {
             nix.enable = true;
