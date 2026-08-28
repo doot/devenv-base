@@ -87,6 +87,7 @@
         ];
 
         enterShell = ''
+          angrr touch --silent --project .
           echo "Loaded base profile."
         '';
 
