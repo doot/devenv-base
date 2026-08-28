@@ -118,6 +118,7 @@
             shellcheck.enable = !config.container.isBuilding;
             actionlint.enable = !config.container.isBuilding;
             check-toml.enable = !config.container.isBuilding;
+            lychee.enable = !config.container.isBuilding; # Checks for broken URLs
           };
         };
       };
