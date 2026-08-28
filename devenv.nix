@@ -188,6 +188,9 @@
           };
         };
       };
+      py-rust = {
+        extends = ["base" "python" "rust"];
+      };
     };
   };
 }
