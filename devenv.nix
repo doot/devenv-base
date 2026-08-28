@@ -121,7 +121,16 @@
             shellcheck.enable = !config.container.isBuilding;
             actionlint.enable = !config.container.isBuilding;
             check-toml.enable = !config.container.isBuilding;
-            lychee.enable = !config.container.isBuilding; # Checks for broken URLs
+            lychee = {
+              enable = !config.container.isBuilding; # Checks for broken URLs
+              settings.flags =
+                "--verbose "
+                + "--cache=true "
+                + "--cache-exclude-status '429, 500..600' "
+                + "--exclude-all-private=true "
+                + "--exclude='go\/' "
+                + "--exclude='github\.com\/\\$1' ";
+            };
           };
         };
       };
