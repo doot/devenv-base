@@ -94,6 +94,9 @@
         '';
 
         git-hooks = {
+          excludes = [
+            "LICENSE"
+          ];
           hooks = {
             commitizen.enable = !config.container.isBuilding;
             deadnix.enable = !config.container.isBuilding;
@@ -129,7 +132,8 @@
                 + "--cache-exclude-status '429, 500..600' "
                 + "--exclude-all-private=true "
                 + "--exclude='go\/' "
-                + "--exclude='github\.com\/\\$1' ";
+                + "--exclude='github\.com\/\\$1' "
+                + "--exclude='ticketmaster.com' ";
             };
           };
         };
