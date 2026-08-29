@@ -4,6 +4,10 @@
   config,
   ...
 }:
+# TODO: Add a script to devenv, flake for base, priv, and push up changes. Maybe add this to nixos-config? Or here?
+# TODO: Add a javascript profile and update resume with that.
+# TODO: Add a golang profile for learning go
+# TODO: Add a kubernetes profile with helm and various tools
 # TODO: Is there any advantage to having the `options.shared` blocks below for `rust`, `nix`, `shell`, etc, vs
 # just putting them directly in the `profiles.base.module` block? It seems like it just makes things harder to read with disjointed blocks and if statements
 # instead of just keeping everything related to "rust" in the rust profile.
@@ -98,6 +102,16 @@
             "LICENSE"
           ];
           hooks = {
+            # Specify a few `claude.code.agents` in priv repo?
+            # We can also define skills, bundled resources, etc
+            # Can we get devenv to write and link the `CLAUDE.md` file? Then we can possibly keep that out of the repos
+            #
+            # treefmt-nix vs the individual formatters bellow?
+            #
+            # trufflehog? or ripsecrets? Or something else to lint secrets?
+            # Maybe pre-commit-ensure-sops? (only in nixos config repo)
+            #
+            # treefmt has a ruff-check.extendedSelect we can use to encode additional rules ("I"), etc
             commitizen.enable = !config.container.isBuilding;
             deadnix.enable = !config.container.isBuilding;
             statix.enable = !config.container.isBuilding;
@@ -133,7 +147,8 @@
                 + "--exclude-all-private=true "
                 + "--exclude='go\/' "
                 + "--exclude='github\.com\/\\$1' "
-                + "--exclude='ticketmaster.com' ";
+                + "--exclude='ticketmaster.com' "
+                + "--exclude='jhauschildt.com' ";
             };
           };
         };
