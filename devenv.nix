@@ -132,6 +132,7 @@
             pre-commit-hook-ensure-sops.enable = !config.container.isBuilding;
             trufflehog.enable = !config.container.isBuilding;
             ripsecrets.enable = !config.container.isBuilding;
+            shfmt.enable = !config.container.isBuilding;
           };
         };
       };
