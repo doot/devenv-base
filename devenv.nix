@@ -125,9 +125,11 @@
                 + "--cache-exclude-status '429, 500..600' "
                 + "--exclude-all-private=true "
                 + "--exclude='go\/' "
+                + "--exclude='https:\/\/(grafana|prom|ntfy|gitea-mirror|changelog)\/' "
                 + "--exclude='.*ntfy.*' "
                 + "--exclude='.*github\.com\/\\$1' "
                 + "--exclude='.*ticketmaster.com.*' "
+                + "--exclude='.*hyprland.org.*' "
                 + "--exclude='.*jhauschildt.com.*' ";
             };
             pre-commit-hook-ensure-sops.enable = !config.container.isBuilding;
