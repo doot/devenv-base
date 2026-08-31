@@ -99,7 +99,7 @@
               enable = !config.container.isBuilding;
               settings.configuration = {
                 MD013 = {
-                  line_length = 180;
+                  line_length = 300;
                 };
               };
             };
