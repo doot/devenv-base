@@ -82,7 +82,11 @@
         ];
 
         enterShell = ''
-          angrr touch --silent --project .
+          if type angrr >/dev/null 2>&1
+          then
+            angrr touch --silent --project .
+          fi
+
           echo "Loaded base profile."
         '';
 
