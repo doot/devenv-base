@@ -128,7 +128,7 @@
                 + "--exclude='https:\/\/(grafana|prom|ntfy|gitea-mirror|changelog)\/' "
                 + "--exclude='.*ntfy.*' "
                 + "--exclude='.*github\.com\/\\$1' "
-                + "--exclude='.*gitlab\.com\/\\$1' "
+                + "--exclude='.*gitlab\.com.*' "
                 + "--exclude='.*ticketmaster.com.*' "
                 + "--exclude='.*hyprland.org.*' "
                 + "--exclude='.*jhauschildt.com.*' ";
