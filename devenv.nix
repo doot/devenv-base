@@ -68,7 +68,7 @@
           };
         };
 
-        cachix.pull = ["devenv" "pre-commit-hooks"];
+        cachix.pull = ["devenv" "pre-commit-hooks" "nix-community"];
 
         devcontainer.enable = true;
 
