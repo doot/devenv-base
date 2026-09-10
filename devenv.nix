@@ -272,6 +272,10 @@
       py-rust = {
         extends = ["base" "python" "rust"];
       };
+
+      all = {
+        extends = ["base" "python" "rust" "javascript" "golang"];
+      };
     };
   };
 }
