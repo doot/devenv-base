@@ -10,6 +10,7 @@
       nix.enable = lib.mkEnableOption "Nix default options";
       shell.enable = lib.mkEnableOption "Shell default options";
       python.enable = lib.mkEnableOption "Python default options";
+      javascript.enable = lib.mkEnableOption "JavaScript default options";
     };
   };
 
@@ -53,6 +54,15 @@
         uv = {
           enable = true;
           sync.enable = true;
+        };
+      };
+
+      javascript = lib.mkIf config.shared.languages.javascript.enable {
+        enable = true;
+        lsp.enable = true;
+        pnpm = {
+          enable = true;
+          install.enable = true;
         };
       };
     };
@@ -210,6 +220,24 @@
           };
         };
       };
+
+      javascript = {
+        extends = ["base"];
+        module = {
+          shared.languages.javascript.enable = true;
+
+          enterShell = ''
+            echo "Loaded JavaScript profile."
+          '';
+
+          git-hooks = {
+            excludes = [
+              "pnpm-lock.yaml"
+            ];
+          };
+        };
+      };
+
       py-rust = {
         extends = ["base" "python" "rust"];
       };
