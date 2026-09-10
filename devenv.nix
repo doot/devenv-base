@@ -11,6 +11,7 @@
       shell.enable = lib.mkEnableOption "Shell default options";
       python.enable = lib.mkEnableOption "Python default options";
       javascript.enable = lib.mkEnableOption "JavaScript default options";
+      golang.enable = lib.mkEnableOption "Golang default options";
     };
   };
 
@@ -63,6 +64,17 @@
         pnpm = {
           enable = true;
           install.enable = true;
+        };
+      };
+
+      go = lib.mkIf config.shared.languages.golang.enable {
+        enable = true;
+        enableHardeningWorkaround = true;
+        delve = {
+          enable = true;
+        };
+        lsp = {
+          enable = true;
         };
       };
     };
@@ -234,6 +246,25 @@
             excludes = [
               "pnpm-lock.yaml"
             ];
+          };
+        };
+      };
+
+      golang = {
+        extends = ["base"];
+        module = {
+          shared.languages.golang.enable = true;
+
+          enterShell = ''
+            echo "Loaded Golang profile."
+          '';
+          treefmt.config.programs.gofmt.enable = true;
+          treefmt.config.programs.goimports.enable = true;
+          git-hooks = {
+            hooks = {
+              gotest.enable = !config.container.isBuilding;
+              golangci-lint.enable = !config.container.isBuilding;
+            };
           };
         };
       };
