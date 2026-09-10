@@ -157,7 +157,8 @@
                 + "--exclude='.*gitlab\.com.*' "
                 + "--exclude='.*ticketmaster.com.*' "
                 + "--exclude='.*hyprland.org.*' "
-                + "--exclude='.*jhauschildt.com.*' ";
+                + "--exclude='.*jhauschildt.com.*' "
+                + "--exclude='.*.gitlab.io.*' ";
             };
             pre-commit-hook-ensure-sops.enable = !config.container.isBuilding;
             trufflehog.enable = !config.container.isBuilding;
