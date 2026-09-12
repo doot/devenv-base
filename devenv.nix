@@ -18,6 +18,9 @@
   config = {
     name = "Devenv Base Config";
 
+    # Avoid test tasks on shell entry: cachix/devenv@d6b3759 regresses task traversal.
+    tasks."devenv:enterTest".after = lib.mkIf (!config.devenv.isTesting) (lib.mkForce []);
+
     # packages = lib.mkIf config.shared.languages.rust.enable lib.optionals (!config.container.isBuilding && !config.devenv.isTesting) [
     # Development packages to include only when not building a container or testing
     packages = lib.mkIf config.shared.languages.rust.enable [
