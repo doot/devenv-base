@@ -240,7 +240,7 @@
 
           packages = [
             pkgs.basedpyright
-            pkgs.debugpy
+            pkgs.python314Packages.debugpy
             pkgs.ruff
             pkgs.mypy
           ];
