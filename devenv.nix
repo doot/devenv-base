@@ -294,8 +294,7 @@
             pkgs.impl
             pkgs.delve
             pkgs.gopls
-            pkgs.goimports
-            pkgs.gomodifytags
+            pkgs.gotools
             pkgs.gofumpt
           ];
 
