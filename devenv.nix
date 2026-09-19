@@ -104,6 +104,23 @@
           pkgs.hunspellDicts.en_US
           pkgs.nil # TODO: Is this needed? Should be included by git-hooks?
           pkgs.jq # Needed for tasks and CLI script that use jq
+          pkgs.yaml-language-server
+          pkgs.taplo
+          pkgs.stylua
+          pkgs.shfmt
+          pkgs.shellcheck
+          pkgs.neocmakelsp
+          pkgs.marksman
+          pkgs.lua-language-server
+          pkgs.vscode-json-languageserver
+          pkgs.hadolint
+          pkgs.dockerfile-language-server
+          pkgs.docker-compose-language-service
+          pkgs.bash-language-server
+          pkgs.checkmake
+          pkgs.cmake-format
+          pkgs.cmake-language-server
+          pkgs.autotools-language-server
         ];
 
         enterShell = ''
@@ -176,6 +193,13 @@
         module = {
           shared.languages.rust.enable = true;
 
+          packages = [
+            pkgs.bacon-ls
+            pkgs.bacon
+            pkgs.rust-analyzer
+            pkgs.codelldb
+          ];
+
           enterTest = ''
             rustc --version
             echo "Running tests"
@@ -213,6 +237,13 @@
         extends = ["base"];
         module = {
           shared.languages.python.enable = true;
+
+          packages = [
+            pkgs.basedpyright
+            pkgs.debugpy
+            pkgs.ruff
+            pkgs.mypy
+          ];
 
           enterShell = ''
             # Create a symlink to the Python virtual environment for IDE compatibility
@@ -258,6 +289,15 @@
         extends = ["base"];
         module = {
           shared.languages.golang.enable = true;
+
+          packages = [
+            pkgs.impl
+            pkgs.delve
+            pkgs.gopls
+            pkgs.goimports
+            pkgs.gomodifytags
+            pkgs.gofumpt
+          ];
 
           enterShell = ''
             echo "Loaded Golang profile."
