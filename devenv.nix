@@ -194,10 +194,11 @@
           shared.languages.rust.enable = true;
 
           packages = [
-            pkgs.bacon-ls
+            # pkgs.bacon-ls
+            # pkgs.codelldb
             pkgs.bacon
             pkgs.rust-analyzer
-            pkgs.codelldb
+            pkgs.lldb
           ];
 
           enterTest = ''
